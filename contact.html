@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!-- Using the menu container -->
+    <div id="menuContainer"></div>
+
+    <header>
+        <h1>Welcome to My Book Club!!!</h1>
+    </header>
+
+    <main>
+        <div id="contactText" style="text-align: center;">
+            <p id="message"></p>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() 
+            {
+                var message = document.getElementById("message");
+                
+                message.style.fontWeight = "bold";
+                message.style.color = "brown";
+                message.style.textShadow = "2px 2px 5px white";  
+                message.textContent = "Please fill out the form below to become a Member!";
+
+                $("#message").css("cursor", "default");
+
+                $("#message").mouseover(function() 
+                    {
+                        $(this).css({
+                            "color": "#FFFFF0",
+                            "font-size": "20px",
+                            "text-shadow": "3px 3px 8px #ff8c00"
+                            });
+
+                }).mouseout(function() 
+                    {
+                        $(this).css({
+                            "color": "brown",
+                            "font-size": "16px",
+                            "text-shadow": "2px 2px 5px white"
+                        });
+                    });
+                });
+        </script>
+
+        <br>
+
+        <form id="contactForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName">
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName">
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email">
+
+            <br><br>
+
+            <fieldset>
+                <legend>Select Your Interests:</legend>
+                <input type="checkbox" id="fiction" name="interests" value="Fiction">
+                <label for="fiction">Fiction</label>
+
+                <input type="checkbox" id="nonfiction" name="interests" value="Non-Fiction">
+                <label for="nonfiction">Non-Fiction</label>
+
+                <input type="checkbox" id="sci-fi" name="interests" value="Sci-Fi">
+                <label for="sci-fi">Sci-Fi</label>
+
+                <input type="checkbox" id="fantasy" name="interests" value="Fantasy">
+                <label for="fantasy">Fantasy</label>
+
+                <input type="checkbox" id="thriller" name="interests" value="Thriller">
+                <label for="thriller">Thriller</label>
+
+                <input type="checkbox" id="romance" name="interests" value="Romance">
+                <label for="romance">Romance</label>
+
+                <input type="checkbox" id="mystery" name="interests" value="Mystery">
+                <label for="mystery">Mystery</label>
+
+                <input type="checkbox" id="young adult" name="interests" value="Young Adult">
+                <label for="young adult">Young Adult</label>
+            </fieldset>
+
+            <br>
+
+            <button type="button" id="submitBtn">Submit</button>
+            <p id="statusMessage"></p>
+        </form>
+    </main>
+
+    <script>
+        // Form validation
+        $("#submitBtn").click(function () 
+        {
+            let firstName = $("#firstName").val().trim();
+            let lastName = $("#lastName").val().trim();
+            let email = $("#email").val().trim();
+            let interests = $("input[name='interests']:checked");
+            let statusMessage = $("#statusMessage");
+
+            $(".error").removeClass("error");
+            statusMessage.text("").css("color", "");
+
+            let isValid = true;
+            let messages = [];
+
+            if (!firstName) {
+                $("#firstName").addClass("error");
+                messages.push("First name is required.");
+                isValid = false;
+            }
+
+            if (!lastName) {
+                $("#lastName").addClass("error");
+                messages.push("Last name is required.");
+                isValid = false;
+            }
+
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                $("#email").addClass("error");
+                messages.push("Email is required.");
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                $("#email").addClass("error");
+                messages.push("Please enter a valid email address.");
+                isValid = false;
+            }
+
+            if (interests.length === 0) {
+                messages.push("Please select at least one interest.");
+                isValid = false;
+            }
+
+            if (!isValid) {
+                statusMessage.html(messages.join("<br>")).css(
+                    {
+                        "color": "red",
+                        "font-weight": "bold"
+                    });
+
+                return;
+            }
+
+            statusMessage.text("Thank you!!!").css(
+                {
+                    "color": "black",
+                    "font-weight": "bold"
+                });
+            });
+
+        // Creating menu and moving it into top-right corner
+        $(document).ready(function () {
+            const $menuContainer = $("#menuContainer");
+
+            const $menuBtn = $('<button id="menuBtn">Menu</button>');
+            const $menuList = $('<ul id="menuList"></ul>');
+
+            const menuItems = [
+                { name: "Home", link: "index.html" },
+                { name: "Book Gallery", link: "gallery.html" },
+                { name: "Book of the Month", link: "book-month.html" }     
+            ];
+
+            menuItems.forEach(item => {
+                $menuList.append(`<li><a href="${item.link}">${item.name}</a></li>`);
+            });
+
+            $menuContainer.append($menuBtn);
+            $menuContainer.append($menuList);
+
+            $menuBtn.click(function () {
+                $menuList.slideToggle();
+            });
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2025 Jessica's Cozy Book Club | Happy Reading!</p>
+    </footer>
+</body>
+</html>

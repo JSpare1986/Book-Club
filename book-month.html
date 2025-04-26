@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book of the Month</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+</head>
+<body>
+ 
+  <div class="menu" id="menuContainer"></div>
+
+  <div class="slider">
+    <script>
+      $(".slider h2").css("cursor", "default");
+    </script>
+  </div>
+
+  <!-- putting menu into top-right -->
+
+  <script>
+    $(document).ready(function () 
+    {
+      const $menuContainer = $("#menuContainer");
+      const $menuBtn = $('<button id="menuBtn">Menu</button>');
+      const $menuList = $('<ul id="menuList"></ul>');
+      const menuItems = 
+        [
+          { name: "Home", link: "index.html" },
+          { name: "Contact Me", link: "contact.html" },
+          { name: "Book Gallery", link: "gallery.html" },
+        ];
+
+      menuItems.forEach(item => 
+       {
+        $menuList.append(`<li><a href="${item.link}">${item.name}</a></li>`);
+       });
+
+      $menuContainer.append($menuBtn);
+      $menuContainer.append($menuList);
+
+      $menuBtn.click(function () 
+        {
+          $menuList.slideToggle();
+        });
+    });
+
+    // My Header
+    $('body').prepend('<div class="top-header">Book of the Month</div>');
+    $('.top-header').css(
+      {
+        'position': 'absolute',
+        'top': '10%',
+        'left': '50%',
+        'transform': 'translateX(-50%)',
+        'font-size': '2em',
+        'color': '#5d4037',
+        'font-weight': 'bold',
+        'z-index': '1000',
+        'font-family': 'Helvetica, sans-serif',
+        'padding': '10px',
+        'border-radius': '10px',
+        'cursor': 'pointer',
+        'transition': 'color 0.3s, text-shadow 0.3s'
+      });
+
+    const imgBox = $('<div class="slide-box"><img src="images/slide1.jpg" alt="Slide 1"></div>');
+    $('body').append(imgBox);
+
+    $('.slide-box').css(
+      {
+        'position': 'absolute',
+        'top': '20%',
+        'left': '50%',
+        'transform': 'translateX(-50%)',
+        'border': '5px solid #5d4037',
+        'padding': '10px',
+        'background': 'white',
+        'border-radius': '15px',
+        'box-shadow': '0 4px 12px rgba(0,0,0,0.3)',
+        'z-index': '999',
+        'display': 'none'
+    });
+
+    $('.slide-box img').css(
+      {
+        'max-width': '70%',
+        'height': 'auto',
+        'border-radius': '10px',
+        'display': 'block',
+        'margin': '0 auto'
+      });
+
+    function glowText() 
+    {
+      $('.top-header').css(
+        {
+          'text-shadow': '0 0 10px rgba(255, 165, 0, 0.8), 0 0 20px rgba(255, 165, 0, 0.7), 0 0 30px rgba(255, 165, 0, 0.6)'
+        });
+    }
+
+    function resetGlow() 
+    {
+      $('.top-header').css({ 'text-shadow': 'none' });
+    }
+
+    $('.top-header').hover(glowText, resetGlow);
+
+    $('.top-header').on('click', function () {
+      const $header = $(this);
+      const $slideBox = $('.slide-box');
+
+      $slideBox.fadeToggle(200, function () 
+      {
+        if ($slideBox.is(':visible')) 
+        {
+          $header.css({
+            'color': 'red',
+            'background-color': 'transparent',
+            'text-shadow': '0 0 5px rgba(255,255,255,0.9)'
+            });
+
+        } else
+        {
+          $header.css(
+            {
+              'color': '#5d4037',
+              'background-color': '',
+              'text-shadow': ''
+            });
+        }
+      });
+    });
+
+    $('.top-header').hover(
+      function () 
+        {
+          $(this).animate({ fontSize: "3em", padding: "20px" }, 200);
+        },
+      function () 
+        {
+          $(this).animate({ fontSize: "2em", padding: "10px" }, 200);
+        }
+    );
+
+    $(document).ready(function () 
+    {
+      $('body').css(
+        {
+          'background-image': 'url("images/coffee-book.jpg")',
+          'background-size': '50%',
+          'background-position': 'center',
+          'background-repeat': 'no-repeat',
+          'font-family': 'Helvetica, sans-serif',
+          'margin': 0,
+          'padding': 0,
+          'display': 'flex',
+          'flex-direction': 'row',
+          'align-items': 'center',
+          'justify-content': 'flex-start',
+          'height': '100vh'
+        });
+
+      let sections = [
+        {
+          title: "Book Blurb",
+          content: "A spellbinding tale where mortal life collides with a realm of ancient magic and dangerous secrets."
+        },
+        {
+          title: "About the Author",
+          content: "Sarah J. Maas is an author known for writing fantasy novels filled with strong, complex characters, romance, and thrilling plots."
+        },
+        {
+          title: "Book Series",
+          content: "A Court of Thorns and Roses (2015) - A Court of Mist and Fury (2016) - A Court of Wings and Ruin (2017) - A Court of Frost and Starlight (2018) - A Court of Silver Flames (2021)."
+        }
+      ];
+
+      sections.forEach(function (section) 
+      {
+        let button = $('<button class="collapsible"></button>').text(section.title).css(
+          {
+            'background-color': '#8d6e63',
+            'color': 'white',
+            'padding': '10px',
+            'border': 'none',
+            'text-align': 'left',
+            'font-size': '1.2em',
+            'width': '100%',
+            'border-radius': '5px',
+            'margin-bottom': '10px'
+          });
+
+        let content = $('<div class="content"></div>').text(section.content).css(
+          {
+            'padding': '10px 20px',
+            'display': 'none',
+            'background-color': '#f5efe6',
+            'border-left': '3px solid #8d6e63'
+          });
+
+        $('.slider').append(button, content);
+      });
+
+      $(document).on("click", ".collapsible", function () 
+      {
+        $(this).next(".content").slideToggle();
+        $(this).toggleClass("active");
+      });
+
+      $(".slider").css(
+        {
+          'position': 'fixed',
+          'top': '0',
+          'left': '0',
+          'bottom': 'auto',
+          'right': 'auto',
+          'height': 'auto',
+          'width': '250px',
+          'background': 'rgba(255, 255, 255, 0.8)',
+          'box-shadow': '4px 0 8px rgba(0, 0, 0, 0.2)',
+          'padding': '20px',
+          'z-index': '1000'
+        });
+    });
+  </script>
+
+  <footer>
+    <p>&copy; 2025 Jessica's Cozy Book Club | Happy Reading!</p>
+  </footer>
+</body>
+</html>

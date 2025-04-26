@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jessica's Cozy Book Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Jessica's Cozy Book Club</h1>
+        <div id="menuContainer" class="menu"></div>
+    </header>
+
+    <script>
+        // Adding pointer cursor change
+        $("h2").css("cursor", "pointer");
+    </script>
+
+    <main>
+        <script>
+            $(document).ready(function() {
+                // the "Welcome" section
+                let welcomeSection = $('<div id="welcomeSection" class="content"></div>');
+                let welcomeHeading = $('<h2>Welcome to My Book Club!!!</h2>');
+                let fullMessage = $('<p id="fullMessage" style="display: none;"></p>');
+
+                // Adding hover effect to highlight the h2 element
+                welcomeHeading.hover(
+                    function() {
+                        $(this).css({
+                            "color": "red",
+                            "font-size": "2em"
+                        });
+                        $("h2").css("cursor", "pointer");
+                    },
+                    function() {
+                        $(this).css({
+                            "color": "",
+                            "font-size": ""
+                        });
+                    }
+                );
+
+                // Content for paragraph section
+                let messageContent = `
+                    Join me and the club as we dive into exciting stories, share our thoughts, and enjoy great books together!
+                    <br> 
+                    Whether you're a lifelong book lover or just starting your reading journey, our club offers a welcoming space.
+                    <br>
+                    Share insights, exchange recommendations, and discover new favorites together!!!
+                    <br><br><br>
+                    <strong><span style="color: red;">Project Details</span></strong>
+                    <br>
+                    <br>
+                    The warm, earthy palette of chocolate & cream, paired with a coffee-and-books background, evokes the cozy feel of a book club. 
+                    <br>Helvetica ensures clarity, while animations, collapsible sections, a slide box, and a custom menu add a polished touch. 
+                    <br>The Gallery page uses Fancybox for a modern lightbox effect, with image credits linked in the footer or navigation. 
+                    <br>Every design choice—from color to interactivity—was made to reflect the warmth and joy of real book club gatherings.
+                `;
+
+                fullMessage.html(messageContent);
+                welcomeSection.append(welcomeHeading);
+                welcomeSection.append(fullMessage);
+                $('body').append(welcomeSection);
+            });
+        </script>
+    </main>
+
+    <footer>
+        <p id="footerLink">&copy; 2025 Jessica's Cozy Book Club | Happy Reading!</p>
+    </footer>
+
+    <script>
+        $(document).ready(function () {
+            const $menuContainer = $("#menuContainer");
+
+            // Creating menu button and list
+            const $menuBtn = $('<button id="menuBtn">Menu</button>');
+            const $menuList = $('<ul id="menuList" style="display: none;"></ul>');
+
+            const menuItems = [
+                { name: "Contact Me", link: "contact.html" },
+                { name: "Book Gallery", link: "gallery.html" },
+                { name: "Book of the Month", link: "book-month.html" }
+            ];
+
+            menuItems.forEach(item => {
+                $menuList.append(`<li><a href="${item.link}">${item.name}</a></li>`);
+            });
+
+            $menuContainer.append($menuBtn);
+            $menuContainer.append($menuList);
+
+            // Move the menu to the top right using jQuery
+            $menuContainer.css({
+                "position": "absolute",
+                "top": "10px",
+                "right": "10px"
+            });
+
+            // Toggle dropdown
+            $menuBtn.click(function () {
+                $menuList.slideToggle();
+            });
+
+            // Toggle full message on h2 click
+            $("h2").click(function () {
+                $("#fullMessage").slideToggle();
+                $("h2").css("cursor", "pointer");
+            });
+
+            // Make footer clickable to open the Word document
+            $("#footerLink").css("cursor", "pointer");
+            $("#footerLink").click(function () {
+                window.open("Graphic_Citations_w6.docx", "_blank");
+            });
+        });
+    </script>
+
+</body>
+</html>

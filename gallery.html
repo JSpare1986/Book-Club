@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+  <style>
+    .gallery .thumbnails img {
+      cursor: pointer;
+      border: 2px solid #ccc;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .gallery .thumbnails img:hover {
+      transform: scale(1.05);
+      border-color: #ff4081;
+    }
+
+    .fancybox__container {
+      z-index: 9999;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header style="text-align: center; margin-top: 20px;">
+    <h1 style="margin: 0; font-size: 2.5em;">Book Series Gallery</h1>
+  </header>
+
+  <main>
+    <div id="contactText" style="text-align: center;">
+      <p id="message"></p>
+    </div>
+
+    <div id="menuContainer" style="text-align: right; margin: 10px;"></div>
+
+    <div class="gallery">
+      <div class="thumbnails">
+        <a data-fancybox="gallery" data-caption="A Court of Thorns and Roses" href="images/slide1.jpg">
+          <img class="thumb" src="images/slide1_h.jpg" alt="Thumbnail 1" />
+        </a>
+        <a data-fancybox="gallery" data-caption="A Court of Mist and Fury" href="images/slide2.jpg">
+          <img class="thumb" src="images/slide2_h.jpg" alt="Thumbnail 2" />
+        </a>
+        <a data-fancybox="gallery" data-caption="A Court of Wings and Ruin" href="images/slide3.jpg">
+          <img class="thumb" src="images/slide3_h.jpg" alt="Thumbnail 3" />
+        </a>
+        <a data-fancybox="gallery" data-caption="A Court of Frost and Starlight" href="images/slide4.jpg">
+          <img class="thumb" src="images/slide4_h.jpg" alt="Thumbnail 4" />
+        </a>
+        <a data-fancybox="gallery" data-caption="A Court of Silver Flames" href="images/slide5.jpg">
+          <img class="thumb" src="images/slide5_h.jpg" alt="Thumbnail 5" />
+        </a>
+      </div>
+
+      <!--My book summaries-->
+      <div class="book-summaries" id="summaryBox" style="text-align: center;">
+        <div class="summary" id="book1">
+          <h2 style="color: red;">A Court of Thorns and Roses</h2>
+          <p>Feyre Archeron, a mortal huntress, kills a wolf and is taken to the fae realm of Prythian...</p>
+        </div>
+        <div class="summary" id="book2">
+          <h2 style="color: teal;">A Court of Mist and Fury</h2>
+          <p>After surviving Amarantha's trials, Feyre returns to the Spring Court with Tamlin...</p>
+        </div>
+        <div class="summary" id="book3">
+          <h2 style="color: rgb(164, 15, 164);">A Court of Wings and Ruin</h2>
+          <p>Feyre returns to the Night Court after the war, facing tension and preparing for the looming battle...</p>
+        </div>
+        <div class="summary" id="book4">
+          <h2 style="color: rgb(69, 135, 196);">A Court of Frost and Starlight</h2>
+          <p>Set after 'A Court of Wings and Ruin', this novella follows Feyre, Rhysand, and their friends...</p>
+        </div>
+        <div class="summary" id="book5">
+          <h2 style="color: rgb(245, 134, 8);">A Court of Silver Flames</h2>
+          <p>Nesta, Feyre's sister, struggles with trauma after the war. She's sent to the Night Court for help...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Jessica's Cozy Book Club | Happy Reading!</p>
+  </footer>
+
+  <script>
+    $(document).ready(function () {
+      // menu
+      const $menuContainer = $("#menuContainer");
+
+      const $menuBtn = $('<button id="menuBtn">Menu</button>');
+      const $menuList = $('<ul id="menuList" style="display:none; list-style:none; padding:0; margin:0;"></ul>');
+
+      const menuItems = [
+        { name: "Home", link: "index.html" },
+        { name: "Contact Me", link: "contact.html" },
+        { name: "Book of the Month", link: "book-month.html" }
+      ];
+
+      menuItems.forEach(item => {
+        $menuList.append(`<li style="margin:5px 0;"><a href="${item.link}">${item.name}</a></li>`);
+      });
+
+      $menuContainer.append($menuBtn).append($menuList);
+
+      $menuBtn.click(function () {
+        $menuList.slideToggle();
+      });
+
+      // Hiding summaries when fancybox opens
+      Fancybox.bind("[data-fancybox='gallery']", {
+        on: {
+          reveal: () => {
+            $('#summaryBox').addClass('hidden');
+          },
+          destroy: () => {
+            $('#summaryBox').removeClass('hidden');
+          }
+        },
+        Toolbar: {
+          display: [
+            { id: "zoom", position: "left" },
+            "slideshow",
+            "fullscreen",
+            "download",
+            "thumbs",
+            "close"
+          ]
+        },
+        loop: true
+      });
+    });
+  </script>
+</body>
+</html>
